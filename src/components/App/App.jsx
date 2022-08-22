@@ -33,27 +33,28 @@ const App = () => {
               }
             />
             <Route
-              path="/contacts/*"
+              path="/contacts"
               element={
-                <PrivateRoute redirectTo="/contacts">
+                <PrivateRoute>
                   <ContactsPage />
                 </PrivateRoute>
               }
             />
+            {console.log('object')};
             <Route
               path="/contacts/add"
               element={
-                <PublicRoute>
+                <PrivateRoute>
                   <AddContactPage />
-                </PublicRoute>
+                </PrivateRoute>
               }
             />
             <Route
               path="/contacts/edit/:contactId"
               element={
-                <PublicRoute>
+                <PrivateRoute>
                   <ChangeContactPage />
-                </PublicRoute>
+                </PrivateRoute>
               }
             />
             <Route
