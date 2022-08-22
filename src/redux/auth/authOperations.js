@@ -28,9 +28,11 @@ const registerUser = createAsyncThunk('auth/registr', async (user, thunkAPI) => 
 const loginUser = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   try {
     const { data } = await axios.post('users/login', user);
+    console.log(data);
     token.set(data.token);
     return data;
   } catch (error) {
+    console.log(error.message);
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -46,7 +48,7 @@ const logoutUser = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 });
 
 // Get information about the current user
-const getCurrentUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
+const getCurrentUser = createAsyncThunk('auth/getCurUser', async (_, thunkAPI) => {
   const state = thunkAPI.getState();
   const persistedToken = state.auth.token;
 

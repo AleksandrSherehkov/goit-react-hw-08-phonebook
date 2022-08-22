@@ -44,10 +44,11 @@ export const authSlice = createSlice({
     [operations.loginUser.fulfilled](state, action) {
       state.user = action.payload.user;
       state.token = action.payload.token;
+
       state.isLoggedIn = true;
     },
     [operations.loginUser.rejected](state, action) {
-      state.user = action.payload.user;
+      state.error = action.payload;
       state.isLoggedIn = false;
     },
     [operations.logoutUser.pending](state, action) {
