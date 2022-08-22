@@ -8,6 +8,7 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
+  error: null,
 };
 
 const authPersistConfig = {
@@ -20,10 +21,24 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   extraReducers: {
+    [operations.registerUser.pending](state, action) {
+      state.isLoggedIn = true;
+      state.error = null;
+    },
     [operations.registerUser.fulfilled](state, action) {
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
+    },
+
+    [operations.registerUser.rejected](state, action) {
+      state.error = action.payload;
+      state.isLoggedIn = false;
+    },
+
+    [operations.loginUser.pending](state, action) {
+      state.isLoggedIn = true;
+      state.error = null;
     },
 
     [operations.loginUser.fulfilled](state, action) {
@@ -31,24 +46,35 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.isLoggedIn = true;
     },
+    [operations.loginUser.rejected](state, action) {
+      state.user = action.payload.user;
+      state.isLoggedIn = false;
+    },
+    [operations.logoutUser.pending](state, action) {
+      state.isLoggedIn = true;
+      state.error = null;
+    },
 
     [operations.logoutUser.fulfilled](state, action) {
       state.user = { name: null, email: null };
       state.token = null;
       state.isLoggedIn = false;
     },
+    [operations.logoutUser.rejected](state, action) {
+      state.isLoggedIn = false;
+      state.error = action.payload.user;
+    },
 
     [operations.getCurrentUser.pending](state) {
       state.isRefreshing = true;
     },
-
-    [operations.getCurrentUser.rejected](state) {
-      state.isRefreshing = false;
-    },
-
     [operations.getCurrentUser.fulfilled](state, action) {
       state.user = action.payload;
       state.isLoggedIn = true;
+      state.isRefreshing = false;
+    },
+
+    [operations.getCurrentUser.rejected](state) {
       state.isRefreshing = false;
     },
   },
