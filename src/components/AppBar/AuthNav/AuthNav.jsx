@@ -2,7 +2,7 @@ import { List, Item, Link } from './AuthNav.styleed';
 
 const AuthNav = () => {
   return (
-    <List style={{ background: 'red' }}>
+    <List>
       <Item>
         <Link to="/register">Register</Link>
       </Item>
