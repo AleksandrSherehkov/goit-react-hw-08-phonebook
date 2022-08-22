@@ -40,12 +40,14 @@ const App = () => {
                 </PrivateRoute>
               }
             />
-            path="/contacts/add" element=
-            {
-              <PrivateRoute>
-                <AddContactPage />
-              </PrivateRoute>
-            }
+
+            <Route
+              path="/contacts/add"
+              element={
+                <PrivateRoute>
+                  <AddContactPage />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/contacts/edit/:contactId"
